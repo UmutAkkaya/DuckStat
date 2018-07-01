@@ -1,0 +1,73 @@
+.Container {
+    text-align: center
+}
+
+.newFeedingContainer{
+    vertical-align: 0%;
+    top: 100px;
+    margin: 0 auto;
+    position: relative;
+    border-style: groove;
+    padding: 20px;
+    width: 400px;
+    border-radius: 5px;
+}
+
+form {
+    display: inline-grid;
+    text-align: end;
+}
+
+form > label {
+    margin: 6px;
+}
+
+.submit{
+    width: 80px;
+    margin-top: 30px;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: large;
+    border-style: groove;
+    left: 100px;
+    position: relative;
+}
+
+.submit:focus {
+    background: #d8d8d8;
+}
+
+input {
+    width: 144px;
+    border-style: groove;
+    font-size: large;
+    border-radius: 5px;
+}
+
+.duckContainer {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.ducks {
+    margin-top: 120px;
+}
+
+h2 {
+    top: 100px;
+    position: relative;
+}
+
+.CheckboxContainer {
+    margin-top: 20px;
+}
+
+input[type=checkbox]
+{
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  padding: 10px;
+}

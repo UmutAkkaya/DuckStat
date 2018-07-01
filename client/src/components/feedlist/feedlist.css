@@ -1,0 +1,24 @@
+/* typography */
+
+.duckStatTable {
+    margin: 0 auto;
+}
+table, td, th {    
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+.CheckboxTd {
+    width: 1px;
+    padding: 0px;
+}
