@@ -17,7 +17,7 @@ const Feeding = mongoose.model('Feeding', feedingSchema);
 
 const addFeeding = (req, res) => {
     const feeding = req.body;
-
+    console.log(feeding);
     newFeeding = createNewFeeding(feeding, false);
     saveFeeding(newFeeding, function (err, savedObj) {
         if (err) {

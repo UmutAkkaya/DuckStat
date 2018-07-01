@@ -75,7 +75,8 @@ export class NewFeeding extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
+        console.log(this.state.dateTime);
+        
         let feeding = {
             location: this.state.location,
             amount: this.state.amount,
