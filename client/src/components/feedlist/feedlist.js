@@ -33,7 +33,7 @@ export class FeedList extends Component {
         feedingPromise.end((err, res) => {
             if (err) console.log("Error fetching data: ", err);
             else {
-                self.setState({ feedingList: res.body.sort(x => x.dateTime) });
+                self.setState({ feedingList: res.body.sort(x => x.location).sort(x => x.numDucks) });
             }
         });
     }
