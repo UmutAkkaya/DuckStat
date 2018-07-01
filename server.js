@@ -5,6 +5,7 @@ const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 5000;
 var bodyParser = require('body-parser');
+const path = require('path');
 
 app.use(bodyParser.urlencoded());
 
@@ -17,5 +18,14 @@ db.once('open', function() {
 });
 
 app.use('/', routes);
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
