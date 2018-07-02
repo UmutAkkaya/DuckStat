@@ -7,11 +7,11 @@ const port = process.env.PORT || 5000;
 var bodyParser = require('body-parser');
 const path = require('path');
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 // Connect to duckStats db
 mongoose.connect(dbUrl);
-var db = mongoose.connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Database Connection error:'));
 db.once('open', function() {
   console.log(`MongoDB connection established to ${dbUrl}`);

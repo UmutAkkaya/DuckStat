@@ -4,7 +4,7 @@ const cron = require('node-cron');
 const scheduledList = {}
 
 class Scheduler {
-    schedule(id, date, func) {
+    schedule(id, date, scheduledFunc) {
         if (scheduledList == null || scheduledList == undefined) {
             return;
         }
@@ -15,24 +15,21 @@ class Scheduler {
         }
 
         if (date == undefined || date == null) {
-            const task = cron.schedule('0 0 * * *', function () {
+            const task = cron.schedule('0 0 * * *', async function () {
                 // schedule for 12 am
-                func();
+                await scheduledFunc();
             });
             scheduledList[id] = task;
         } else {
             var date = new Date(date);
-            const task = cron.schedule(`${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} * * *`, function () {
-                func();
+            const task = cron.schedule(`${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} * * *`, async function () {
+                await scheduledFunc();
             });
             scheduledList[id] = task;
         }
-
-        console.log('scheduledList: ', scheduledList);
     }
 
     unschedule(id) {
-        console.log('scheduledList: ', scheduledList);
 
         if (scheduledList == null || scheduledList == undefined || scheduledList[id] == undefined) {
             return false;
@@ -41,7 +38,6 @@ class Scheduler {
         if (scheduledList[id] != undefined) {
             scheduledList[id].destroy();
 
-            console.log('scheduledList updated: ', scheduledList);
             return true;
         }
 

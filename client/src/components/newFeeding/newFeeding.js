@@ -9,14 +9,14 @@ export class NewFeeding extends Component {
         super(props);
         this.duckStatDAL = new DuckStatDAL();
 
-        let date = new Date().toISOString();
+        const date = new Date().toISOString();
         var emptyState = {
             location: "",
             amount: 0,
             food: "",
             foodType: "",
             numDucks: 0,
-            dateTime: date.substring(0, date.length - 1), //for some reason there is a letter at the end of the ISO string
+            dateTime: date.substring(0, date.length - 1), // remove the letter at the end of the ISO string
             isScheduled: false,
             disabled: true
         }
@@ -31,14 +31,14 @@ export class NewFeeding extends Component {
     }
 
     resetState() {
-        let date = new Date().toISOString();
+        const date = new Date().toISOString();
         var emptyState = {
             location: "",
             amount: 0,
             food: "",
             foodType: "",
             numDucks: 0,
-            dateTime: date.substring(0, date.length - 1), //for some reason there is a letter at the end of the ISO string
+            dateTime: date.substring(0, date.length - 1), // remove the letter at the end of the ISO string
             isScheduled: false,
             disabled: true
         }
@@ -50,7 +50,7 @@ export class NewFeeding extends Component {
         this.duckStatDAL.getFeedingList()
             .then(res => this.setState({ feedingList: res }))
             .catch(err => {
-                console.log('Error fetching the list: ', err)
+                window.console.log('Error fetching the list: ', err)
                 this.setState({ feedingList: [] })
             })
     }
@@ -75,9 +75,8 @@ export class NewFeeding extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state.dateTime);
-        
-        let feeding = {
+
+        const feeding = {
             location: this.state.location,
             amount: this.state.amount,
             food: this.state.food,
@@ -89,9 +88,9 @@ export class NewFeeding extends Component {
         const self = this;
 
         this.duckStatDAL.submitFeeding(feeding)
-            .end((err, res) => {
+            .end((err) => {
                 if (err) {
-                    console.log(err);
+                    window.console.log(err);
                     return;
                 }
                 self.resetState()
@@ -99,8 +98,8 @@ export class NewFeeding extends Component {
     }
 
     render() {
-        let date = new Date().toISOString();
-        let maxDate = date.substring(0, date.length - 1)
+        const date = new Date().toISOString();
+        const maxDate = date.substring(0, date.length - 1)
 
         return (
             <div className="Container">
@@ -146,7 +145,7 @@ export class NewFeeding extends Component {
                 </div>
 
                 <div className="duckContainer" style={{ width: `${89 * Math.min(this.state.numDucks, 6)}px` }}>
-                <img className='ducks' title='You helped these ducks!' alt="You helped these ducks!" src={imageSource} />
+                    <img className='ducks' title='You helped these ducks!' alt="You helped these ducks!" src={imageSource} />
                 </div>
             </div>
         );

@@ -9,14 +9,14 @@ export default class DuckStatDAL {
     submitFeeding = (newFeeding) => {
         return request.post('/api/addFeeding')
             .send(newFeeding)
-            .set('Accept', 'application/x-www-form-urlencoded')
-            .set('Content-Type', 'application/x-www-form-urlencoded');
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json');
     }
 
     scheduleFeeding = (id, isScheduled) => {
         return request.post('/api/setScheduled')
             .send({ id: id, isScheduled: isScheduled })
-            .set('Accept', 'application/x-www-form-urlencoded')
-            .set('Content-Type', 'application/x-www-form-urlencoded');
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json');
     }
 }

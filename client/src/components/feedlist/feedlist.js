@@ -12,13 +12,14 @@ export class FeedList extends Component {
 
         this.updateFeedList = this.updateFeedList.bind(this);
         this.handleScheduled = this.handleScheduled.bind(this);
-        this.updateFeedList(this)
         this.interval = null;
+
+        this.updateFeedList(this)
     }
 
     componentWillMount() {
-        let self = this;
-        this.interval = setInterval(function(){
+        const self = this;
+        this.interval = setInterval(function () {
             self.updateFeedList(self)
         }, 150000)
     }
@@ -29,11 +30,23 @@ export class FeedList extends Component {
 
     // fetch data for the table
     updateFeedList(self) {
-        let feedingPromise = self.duckStatDAL.getFeedingList()
+        const feedingPromise = self.duckStatDAL.getFeedingList()
         feedingPromise.end((err, res) => {
-            if (err) console.log("Error fetching data: ", err);
+            if (err) window.console.log("Error fetching data: ", err);
             else {
-                self.setState({ feedingList: res.body.sort(x => x.location).sort(x => x.numDucks) });
+                self.setState({
+                    feedingList: res.body.sort((f1, f2) => {
+                        var location1 = f1.location.toUpperCase();
+                        var location2 = f2.location.toUpperCase();
+                        if (location1 < location2) {
+                            return -1;
+                        }
+                        if (location1 > location2) {
+                            return 1;
+                        }
+                        return 0;
+                    })
+                });
             }
         });
     }
@@ -43,12 +56,13 @@ export class FeedList extends Component {
         const value = target.checked;
         const id = target.name
 
-        let confirmed = window.confirm(`Are you sure you would like to ${value ? 'schedule' : 'unschedule'} this?`)
+        // TODO: modals
+        const confirmed = window.confirm(`Are you sure you would like to ${value ? 'schedule' : 'unschedule'} this?`)
         if (confirmed) {
             this.duckStatDAL.scheduleFeeding(id, value)
-                .end((err, res) => {
+                .end((err) => {
                     if (err) {
-                        console.log(err);
+                        window.console.log(err);
                         return;
                     }
 
@@ -65,7 +79,6 @@ export class FeedList extends Component {
     }
 
     render() {
-
         return (
             <div>
                 <table className='duckStatTable'>
@@ -85,8 +98,8 @@ export class FeedList extends Component {
                         <tbody>
                             {
                                 this.state.feedingList.map(feeding => {
-                                    let date = new Date(feeding.dateTime);
-                                    let dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+                                    const date = new Date(feeding.dateTime);
+                                    const dateString = date.toLocaleDateString() + " " + date.toLocaleTimeString();
 
                                     return (<tr key={feeding._id}>
                                         <td className='CheckboxTd'>
@@ -99,8 +112,9 @@ export class FeedList extends Component {
                                         <td>{feeding.numDucks}</td>
                                         <td>{dateString}</td>
                                     </tr>)
-                                })}
-                            </tbody>
+                                })
+                            }
+                        </tbody>
                     }
                 </table>
                 {this.state.feedingList.length === 0 &&
@@ -111,6 +125,4 @@ export class FeedList extends Component {
             </div>
         );
     }
-
-
 }
